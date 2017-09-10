@@ -1,0 +1,41 @@
+#! /bin/sh
+
+sxhkd &
+
+#bspc monitor DisplayPort-0 -n 1 -d I II III IV V VI VII VIII IX X
+#bspc wm -a "Eyefinity" 4744x1024+0+0
+
+bspc wm -a "Eyefinity" 3968x1080+0+0
+bspc wm -a "Eyefinity_Full" 3968x1280+0+0
+
+bspc monitor DVI-I-1 --swap ^1
+bspc monitor DisplayPort-0 --swap ^2
+bspc monitor DVI-D-0 --swap ^3
+bspc monitor Eyefinity --swap ^4
+bspc monitor Eyefinity_Full --swap ^5
+
+bspc monitor DVI-I-1 -d I II III
+bspc monitor DisplayPort-0 -d IV V VI
+bspc monitor DVI-D-0 -d VII VIII
+bspc monitor Eyefinity -d IX
+bspc monitor Eyefinity_Full -d X
+
+bspc desktop ^10 -l monocle
+bspc desktop ^9 -l monocle
+
+bspc config border_width         0
+bspc config window_gap          12
+
+bspc config split_ratio					0.50
+bspc config borderless_monocle			true
+bspc config gapless_monocle				true
+bspc config paddingless_monocle			true
+bspc config click_to_focus				true
+
+bspc rule -a Gimp desktop='^5' state=floating follow=on
+bspc rule -a Firefox desktop='^7'
+bspc rule -a explorer.exe desktop='^9' state='pseudo_tiled' follow=on
+bspc rule -a Albion-Online desktop='^9' state='pseudo_tiled' follow=on
+bspc rule -a mpv state=floating border=off
+
+panel &

@@ -1,0 +1,38 @@
+#! /bin/sh
+
+PANEL_FIFO=/tmp/panel-fifo
+PANEL_HEIGHT=24
+PANEL_FONT="-*-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
+PANEL_WM_NAME=bspwm_panel
+PANEL_MONITOR=$(bspc query -M --names | sed -n 1p)
+export PANEL_FIFO PANEL_HEIGHT PANEL_FONT PANEL_WM_NAME PANEL_MONITOR
+
+if xdo id -a "$PANEL_WM_NAME" > /dev/null ; then
+	printf "%s\n" "The panel is already running." >&2
+	exit 1
+fi
+
+trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
+
+[ -e "$PANEL_FIFO" ] && rm "$PANEL_FIFO"
+mkfifo "$PANEL_FIFO"
+
+bspc config -m "$PANEL_MONITOR" bottom_padding $PANEL_HEIGHT
+while [[ true ]]; do date +"S%R" ; sleep 5 ; done > "$PANEL_FIFO" &
+bspc subscribe report > "$PANEL_FIFO" &
+# while (true) ; do ping -c 1 8.8.8.8 | head -n 2 | tail -n 1 ; sleep 1 ; done > "$PANEL_FIFO" &
+
+. panel_colors
+
+panel_bar < "$PANEL_FIFO" | lemonbar "$PANEL_MONITOR" -a 32 -n "$PANEL_WM_NAME" -g x$PANEL_HEIGHT -f "$PANEL_FONT" -F "$COLOR_DEFAULT_FG" -B "$COLOR_DEFAULT_BG" -U "#FFFFFF" -u 1 -b -d | sh &
+
+wid=$(xdo id -a "$PANEL_WM_NAME")
+tries_left=20
+while [ -z "$wid" -a "$tries_left" -gt 0 ] ; do
+	sleep 0.05
+	wid=$(xdo id -a "$PANEL_WM_NAME")
+	tries_left=$((tries_left - 1))
+done
+[ -n "$wid" ] && xdo above -t "$(xdo id -N Bspwm -n root | sort | head -n 1)" "$wid"
+
+wait
