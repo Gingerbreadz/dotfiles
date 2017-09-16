@@ -1,0 +1,10 @@
+!! Rofi
+!!!!!!!!
+
+rofi.color-enabled:     true
+rofi.lines:             1
+rofi.columns:           5
+rofi.hide-scrollbar:    true
+rofi.separator-style:   none
+rofi.color-normal:      bg, yellow1, bg, yellow1, bg    
+rofi.color-window:      bg, yellow1
