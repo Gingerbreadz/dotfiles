@@ -1,0 +1,22 @@
+!! Color variables
+!!!!!!!!!!!!!!!!!!!!
+
+#define fg              #c0b18b
+#define bg              #1f1f1f
+#define cc              #c0b18b
+#define black1          #4a3637
+#define black2          #4a3637
+#define red1            #d17b49
+#define red2            #d17b49
+#define green1          #7b8748
+#define green2          #7b8748
+#define yellow1         #af865a
+#define yellow2         #af865a
+#define blue1           #535c5c
+#define blue2           #535c5c
+#define magenta1        #775759
+#define magenta2        #775759
+#define cyan1           #6d715e
+#define cyan2           #6d715e
+#define white1          #c0b18b
+#define white2          #c0b18b

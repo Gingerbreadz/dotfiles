@@ -1,0 +1,10 @@
+!! URXVT
+!!!!!!!!!
+
+URxvt.scrollBar:        false
+!URxvt.letterSpace:     -1
+!URxvt.font: xft:Gohufont:size=10
+URxvt.font:             xft:Tewi:antialias=true:size=10
+URxvt.boldFont:         xft:Tewi:style=bold:antialias=true:size=10
+URxvt.italicFont:       xft:Tewi:style=italic:antialias=true:size=10
+URxvt.boldItalicFont:   xft:Tewi:style=bolditalic:antialias=true:size=10
