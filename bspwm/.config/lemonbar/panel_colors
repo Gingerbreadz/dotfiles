@@ -1,5 +1,35 @@
+#!/bin/sh
+IFS=$'\n'
+for color in $(xrdb -query -all | sed s/^\*.//g | grep '\#\([0-9]\|[a-z]\)\{6\}') ; do
+	id=$(echo $color | cut -d ":" -f1) ;
+	value=$(echo $color | cut -d ":" -f2 | sed -e 's/^[ \t]*//') ;
+	case $id in 
+		background) 	 COLOR_TERM_BG=$value ;;
+		foreground) 	 COLOR_TERM_FG=$value ;;
+		color0)		 COLOR_TERM_BLACK=$value ;;
+		color1) 		 COLOR_TERM_RED=$value ;;
+		color2) 		 COLOR_TERM_GREEN=$value ;;
+		color3) 		 COLOR_TERM_YELLOW=$value ;;
+		color4) 		 COLOR_TERM_BLUE=$value ;;
+		color5) 		 COLOR_TERM_MAGENTA=$value ;;
+		color6) 		 COLOR_TERM_CYAN=$value ;;
+		color7) 		 COLOR_TERM_WHITE=$value ;;
+		color8) 		 COLOR_TERM_BLACK_2=$value ;;
+		color9) 		 COLOR_TERM_RED_2=$value ;;
+		color10) 		 COLOR_TERM_GREEN_2=$value ;;
+		color11) 		 COLOR_TERM_YELLOW_2=$value ;;
+		color12) 		 COLOR_TERM_BLUE_2=$value ;;
+		color13) 		 COLOR_TERM_MAGENTA_2=$value ;;
+		color14) 		 COLOR_TERM_CYAN_2=$value ;;
+		color15) 		 COLOR_TERM_WHITE_2=$value ;;
+	esac
+done
+
+############
+## COLORS ##
+############
 COLOR_DEFAULT_FG="#a7a5a5"
-COLOR_DEFAULT_BG="#00333232"
+COLOR_DEFAULT_BG="#C01f1f1f" #"#333232"
 COLOR_MONITOR_FG="#8dbcdf"
 COLOR_MONITOR_BG="#333232"
 COLOR_FOCUSED_MONITOR_FG="#b1d0e8"
@@ -22,3 +52,43 @@ COLOR_TITLE_FG="#a8a2c0"
 COLOR_TITLE_BG="#333232"
 COLOR_SYS_FG="#b1a57d"
 COLOR_SYS_BG="#333232"
+COLOR_SYS_ICON="#b1a57d"
+COLOR_CLOCK_UG="#800000ff"
+COLOR_DATE_UG="#80ffff00"
+COLOR_MEM_UG="#80ff00ff"
+COLOR_BAT_UG="#8000ff00"
+COLOR_VOL_UG="#80ff0000"
+COLOR_NET_UG="#8000ffff"
+COLOR_DESKTOP_UG="#80ffffff"
+COLOR_TITLE_UG="ff8000"
+
+########################
+## ICON - FONTAWESOME ##
+########################
+ICON_CLOCK=""
+ICON_CALENDAR=""
+ICON_BATTERY_FULL=""
+ICON_BATTERY_NORMAL=""
+ICON_BATTERY_LOW=""
+ICON_BATTERY_CHARGING=""
+ICON_VOLUME_HIGH=""
+ICON_VOLUME_LOW=""
+ICON_VOLUME_OFF=""
+ICON_WIFI=""
+ICON_VPN=""
+ICON_ETHERNET=""
+ICON_MEMORY=""
+
+#####################
+## ICON - SIJIFONT ##
+#####################
+#ICON_CLOCK=""
+#ICON_CALENDAR=""
+#ICON_BATTERY_FULL=""
+#ICON_VOLUME_HIGH=""
+#ICON_VOLUME_LOW=""
+#ICON_VOLUME_OFF=""
+#ICON_WIFI=""
+#ICON_VPN=""
+#ICON_ETHERNET=""
+#ICON_MEMORY=""

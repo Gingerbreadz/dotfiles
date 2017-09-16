@@ -1,0 +1,69 @@
+#!/bin/sh
+#Define refresh Rates
+#Use as much as possible event toggled refresh e.g. with alsactl monitor
+
+function repeater {
+	rate=$1 ; leadingchar=$2 ; shift 2
+	while true ; do
+		echo $leadingchar`$@`
+		sleep $rate
+	done &
+}
+
+function window_title {
+	echo $(xtitle -t 100)
+}
+
+function show_clock {
+	echo $(date "+%H:%M")
+}
+
+function show_date {
+	echo $(date "+%a %B %d, %G")
+}
+
+function battery_capacity {
+	echo "$(cat /sys/class/power_supply/BAT0/capacity)%"
+}
+
+function battery_level {
+	echo $(cat /sys/class/power_supply/BAT0/capacity_level)
+}
+
+function battery_status {
+	case $(cat /sys/class/power_supply/BAT0/status) in 
+		Full) out="F" ;;
+		Charging) out="C" ;;
+		Discharging) 	out="D" ;;
+		Unknown) out="U" ;;
+	esac
+	echo $out" "$(battery_capacity)$(battery_level)
+}
+
+function sound_switch {
+	echo $(amixer get Master | grep "%" | awk '{ print $6}' | tr -d {[-]})
+}
+
+function sound_volume {
+	echo $(amixer get Master | grep "%" | awk '{ print $4}' | tr -d {[-]})
+}
+
+function network_wifi_name {
+	echo $(wpa_cli -i wls1 list_networks | grep CURRENT | cut -f2)
+}
+
+function network_ethernet_address {
+	echo $(ip a l enp0s25 | grep "inet " | awk '{print $2}')
+}
+
+function network_status { 
+	out=""
+	if $(grep -q wls1 /proc/net/route) ; then out=$out":W"$(network_wifi_name) ; fi
+	if $(grep -q enp0s25 /proc/net/route) ; then out=$out":E"$(network_ethernet_address) ; fi
+	if $(grep -q tun0 /proc/net/route) ; then out=$out":V"; fi
+	echo $out
+}
+
+function memory_used {
+	echo $(awk '/MemTotal/ {TOT=$2} /MemFree/ {FREE=$2} /Buffers/ {BUFF=$2} /^Cached/ {CACH=$2} /^Slab/ {SLAB=$2} END {printf("%.2f GB\n", (TOT-FREE-BUFF-CACH-SLAB)/1024/1024)}' /proc/meminfo)
+}

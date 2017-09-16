@@ -1,11 +1,17 @@
 #! /bin/sh
-
+ 
 PANEL_FIFO=/tmp/panel-fifo
-PANEL_HEIGHT=24
+PANEL_HEIGHT=17
+PANEL_ULWIDTH=1
 PANEL_FONT="-*-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
+#PANEL_FONT="Gohufont:pixelsize=12"
+PANEL_ICO_FONT="FontAwesome:pixelsize=10"
+#PANEL_SIJI_FONT="Siji:size=10"
+#PANEL_ICO_FONT="-wuncon-siji-medium-r-normal--10-100-75-75-c-80-iso10646-1"
 PANEL_WM_NAME=bspwm_panel
-PANEL_MONITOR=$(bspc query -M --names | sed -n 1p)
-export PANEL_FIFO PANEL_HEIGHT PANEL_FONT PANEL_WM_NAME PANEL_MONITOR
+PRIMARYMONITOR=$(xrandr -q | grep primary | cut -d " " -f1)
+
+export PANEL_FIFO PANEL_HEIGHT PANEL_FONT PANEL_WM_NAME
 
 if xdo id -a "$PANEL_WM_NAME" > /dev/null ; then
 	printf "%s\n" "The panel is already running." >&2
@@ -17,14 +23,25 @@ trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
 [ -e "$PANEL_FIFO" ] && rm "$PANEL_FIFO"
 mkfifo "$PANEL_FIFO"
 
-bspc config -m "$PANEL_MONITOR" bottom_padding $PANEL_HEIGHT
-while [[ true ]]; do date +"S%R" ; sleep 5 ; done > "$PANEL_FIFO" &
+. panel_info
+
+#clock -sf 'S%a %H:%M' > "$PANEL_FIFO" &    
+#battery -sf 'B%s %i' > "$PANEL_FIFO" &
+#volume -sf 'V%s %i' > "$PANEL_FIFO" &
+bspc config top_padding $(( $PANEL_HEIGHT ))
+echo "c" > "$PANEL_FIFO" & 
 bspc subscribe report > "$PANEL_FIFO" &
-# while (true) ; do ping -c 1 8.8.8.8 | head -n 2 | tail -n 1 ; sleep 1 ; done > "$PANEL_FIFO" &
+xtitle -sf 'T%s' > "$PANEL_FIFO" &
+stdbuf -oL alsactl monitor > "$PANEL_FIFO" &
+repeater 3 C show_clock > "$PANEL_FIFO" &
+repeater 30 D show_date > "$PANEL_FIFO" &
+repeater 2 N network_status > "$PANEL_FIFO" &
+repeater 3 B battery_status > "$PANEL_FIFO" &
+repeater 3 M memory_used > "$PANEL_FIFO" &
 
 . panel_colors
 
-panel_bar < "$PANEL_FIFO" | lemonbar "$PANEL_MONITOR" -a 32 -n "$PANEL_WM_NAME" -g x$PANEL_HEIGHT -f "$PANEL_FONT" -F "$COLOR_DEFAULT_FG" -B "$COLOR_DEFAULT_BG" -U "#FFFFFF" -u 1 -b -d | sh &
+panel_bar < "$PANEL_FIFO" | lemonbar ${PRIMARYMONITOR} -a 32 -n "$PANEL_WM_NAME" -g x$PANEL_HEIGHT -f "$PANEL_FONT" -f "$PANEL_ICO_FONT" -F "$COLOR_DEFAULT_FG" -B "$COLOR_DEFAULT_BG" -u "$PANEL_ULWIDTH" | sh &
 
 wid=$(xdo id -a "$PANEL_WM_NAME")
 tries_left=20

@@ -2,12 +2,12 @@
 # wm independent hotkeys
 #
 
-# lockscreen
-super + alt + ctrl + l
+# lock
+super + alt + ctrl + l 
 	slock
 
-# sceenshot
-super + Print
+# screenshot
+Print
 	scrot
 
 # terminal emulator
@@ -20,13 +20,13 @@ super + shift + Return
 super + space
 	rofi -show run
 
-# media keys
-XF86Audio{RaiseVolume,LowerVolume,Mute}
-	amixer sset Master {3+,3-,toggle}
-
 # make sxhkd reload its configuration files:
 super + Escape
 	pkill -USR1 -x sxhkd
+
+# keyboard hotkeys
+XF86Audio{RaiseVolume,LowerVolume,Mute}
+	amixer sset Master {3+,3-,toggle}
 
 #
 # bspwm hotkeys
@@ -53,32 +53,22 @@ super + g
 	bspc node -s biggest
 
 #
-# multimonitor handler
-#
-
-# screen selector
-alt + {q,w,e,r}
-	bspc monitor -f $(bspc query -M | sed -n {1,2,3,4}p)
-
-# desktop swap
-alt + {1-9,0}
-	D='^{1-9,10}'; M=$(bspc query -M -d $D); \
-	Df=$(bspc query -D -d focused); Mf=$(bspc query -M -m focused); \
-	if [[ $Mf != $M ]]; then bspc desktop $D -s $Df ; \
-	else bspc desktop -f $D; \
-	fi;
-
-#
 # state/flags
 #
 
 # set the window state
-super + {d,shift + d,s,f}
+super + {t,shift + t,s,f}
 	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
 
 # set the node flags
 super + ctrl + {x,y,z}
 	bspc node -g {locked,sticky,private}
+
+# set padding
+super + b
+	bspc config top_padding 70 ; bspc config right_padding 70 ; bspc config left_padding 70 ; bspc config bottom_padding 70
+super + v
+	bspc config top_padding 17 ; bspc config right_padding 0 ; bspc config left_padding 0 ; bspc config bottom_padding 0
 
 #
 # focus/swap
@@ -111,8 +101,24 @@ super + {o,i}
 	bspc wm -h on
 
 # focus or send to the given desktop
-super + {_,shift + }{1-9,0}
-	bspc {desktop -f, node -d} '^{1-9,10}'
+super + shift + {1-9,0}
+	bspc node -d '^{1-9,10}'
+
+#
+# MultiMonitor
+#
+
+# select the monitor
+alt + {q,w}
+	bspc monitor -f $(bspc query -M | sed -n {1,2}p)
+
+# send window to a specific monitor OR send desktop to a specific monitor
+super + {1-9,0}
+	D='^{1-9,10}'; M=$(bspc query -M -d $D); \
+	Df=$(bspc query -D -d focused); Mf=$(bspc query -M -m focused); \
+	if [[ $Mf != $M ]]; then bspc desktop $D -s $Df ; \
+	else bspc desktop -f $D; \
+	fi;
 
 #
 # preselect
@@ -135,18 +141,17 @@ super + ctrl + shift + space
 	bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
 
 #
-# move/resize
+# resize tiled/floating
 #
 
-# expand a window by moving one of its side outward
+# expand the tiled space in the given direction
 super + alt + {h,j,k,l}
-	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
+	bspc node {@west -r -10,@south -r +10,@north -r -10,@east -r +10}
 
-# contract a window by moving one of its side inward
+# contract the tiled space in the given direction
 super + alt + shift + {h,j,k,l}
-	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
+	bspc node {@east -r -10,@north -r +10,@south -r -10,@west -r +10}
 
 # move a floating window
 super + {Left,Down,Up,Right}
-	bspc node -v {-20 0,0 20,0 -20,20 0}
-
+	xdo move {-x -20,-y +20,-y -20,-x +20}
