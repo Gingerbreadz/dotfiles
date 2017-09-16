@@ -1,0 +1,9 @@
+set from=$my_address_at_telecomsudparis
+set imap_pass=$my_password_tsp
+
+set folder = imaps://${my_address_at_telecomsudparis_2}@z.mines-telecom.fr/
+set spoolfile = +INBOX
+set postponed = +Drafts 
+set record = +Sent
+
+set smtp_url = smtps://${my_address_at_telecomsudparis_2}@z.mines-telecom.fr/
