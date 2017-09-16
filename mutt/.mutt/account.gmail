@@ -1,0 +1,9 @@
+set from=$my_address_at_gmail
+set imap_pass=$my_password_gmail
+
+set folder = imaps://${my_address_at_gmail}@imap.gmail.com/
+set spoolfile = imaps://${my_address_at_gmail}@imap.gmail.com:993/INBOX
+set postponed="+[Gmail]/Draft" 
+set record = "+[Gmail]/Sent"
+
+set smtp_url = smtps://${my_address_at_gmail_partial}@smtp.gmail.com/

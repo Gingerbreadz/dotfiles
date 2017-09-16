@@ -1,0 +1,9 @@
+set from=$my_address_at_minet
+set imap_pass=$my_password_minet
+
+set folder = imaps://${my_address_at_minet_partial}@imap.minet.net/INBOX
+set spoolfile = imaps://${my_address_at_minet_partial}@imap.minet.net/INBOX
+set postponed = +Drafts 
+set record = +Sent
+
+set smtp_url = smtps://${my_address_at_minet_partial}@smtp.minet.net/

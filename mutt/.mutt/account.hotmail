@@ -1,0 +1,9 @@
+set from=$my_address_at_hotmail
+set imap_pass=$my_password_hotmail
+
+set folder = imaps://${my_address_at_hotmail}@imap-mail.outlook.com
+set spoolfile = +INBOX
+set postponed = +Drafts 
+set record = +Sent
+
+set smtp_url = smtp://${my_address_at_hotmail}@smtp-mail.outlook.com:587
