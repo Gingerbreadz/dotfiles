@@ -1,0 +1,21 @@
+#!/bin/sh
+
+INTERNAL="LVDS-1"
+EXTERNAL="VGA-1"
+WORKSPACES="10"
+NEW="Desktop"
+
+status=`xrandr | grep $EXTERNAL | awk '{ print NF }'`
+
+if [ $status == "10" ] ; then
+	xrandr --output $INTERNAL --auto --pos 0x0 --output $EXTERNAL --auto --right-of $INTERNAL
+	nitrogen --head=1 --set-auto ~/Pictures/Wallpaper/5h1l1D5.jpg
+	bspc desktop $WORKSPACES -m $EXTERNAL
+	bspc desktop $NEW -r
+elif [ $status == "14" ] ; then 
+	xrandr --output $INTERNAL --auto --output $EXTERNAL --off
+	nitrogen --restore
+	bspc monitor $EXTERNAL -a $NEW
+	bspc desktop $WORKSPACES -m $INTERNAL
+	bspc monitor $EXTERNAL -r
+fi

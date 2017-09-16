@@ -1,0 +1,13 @@
+#!/bin/bash
+
+HUE=(-set colorspace Gray -separate -average)
+
+IMAGE="$(mktemp).png"
+scrot $IMAGE
+
+ICON="/home/anatole/Pictures/Lockscreen/lock.png"
+[[ -f "$ICON" ]] && convert "$IMAGE" "${HUE[@]}" "$ICON" -gravity center -composite -matte "$IMAGE"
+
+#physlock -l
+i3lock -n -u -i "$IMAGE" 
+#physlock -L

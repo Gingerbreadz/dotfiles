@@ -1,0 +1,7 @@
+#!/bin/sh
+
+xrandr --output LVDS-1 --auto --rotate left
+killall panel && panel &
+nitrogen --set-centered ~/Pictures/Wallpaper/3GQk22g.jpg 
+synergyc MSI_GX740
+
