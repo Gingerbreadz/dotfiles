@@ -3,7 +3,7 @@ font = Tewi 12
 
 allow_bold = false
 mouse_autohide = true
-
+browser = qutebrowser
 
 [colors]
 

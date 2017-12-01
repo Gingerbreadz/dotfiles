@@ -21,7 +21,7 @@ bspc desktop $(bspc query -D | head -n 2 | tail -n 1) -l monocle
 
 bspc rule -a Gimp desktop=^8 state=floating follow=on
 bspc rule -a Chromium desktop=^2
-bspc rule -a Firefox desktop=^2 layout=monocle
+bspc rule -a qutebrowser desktop=^2 layout=monocle
 bspc rule -a mpv state=floating border=off
 bspc rule -a Wine state=floating border=off
 bspc rule -a MPlayer state=floating border=off
