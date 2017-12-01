@@ -81,6 +81,11 @@ set crypt_replysign=yes
 set crypt_replysignencrypted=yes
 set pgp_timeout=3600
 
+# html mail support
+set mailcap_path 	= ~/.mutt/mailcap
+auto_view text/html
+alternative_order text/plain text/enriched text/html
+
 # source my password file
 source "gpg2 -dq $HOME/.mutt/my_pwds.gpg |"
 source "gpg2 -dq $HOME/.mutt/my_accounts.gpg |"
