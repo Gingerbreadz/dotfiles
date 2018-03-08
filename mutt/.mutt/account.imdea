@@ -1,0 +1,9 @@
+set from=$my_address_at_imdea
+set imap_pass=$my_password_imdea
+
+set folder = imaps://${my_address_at_imdea_partial}@mail.imdea.org/
+set spoolfile = +INBOX
+set postponed = +Drafts
+set record = +Sent
+
+set smtp_url = smtps://${my_address_at_imdea_partial}@mail.imdea.org/

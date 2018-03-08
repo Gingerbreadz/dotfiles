@@ -95,5 +95,9 @@ macro index <f2> '<sync-mailbox><enter-command>source ~/.mutt/account.minet<ente
 macro index <f3> '<sync-mailbox><enter-command>source ~/.mutt/account.telecomsudparis<enter><change-folder>!<enter>'
 macro index <f4> '<sync-mailbox><enter-command>source ~/.mutt/account.gmail<enter><change-folder>!<enter>'
 macro index <f5> '<sync-mailbox><enter-command>source ~/.mutt/account.hotmail<enter><change-folder>!<enter>'
+macro index <f6> '<sync-mailbox><enter-command>source ~/.mutt/account.imdea<enter><change-folder>!<enter>'
 # source the default mailbox on startup
-source ~/.mutt/account.minet
+source ~/.mutt/account.telecomsudparis
+
+#Auto-sync change dir for multiple folders
+macro index 'c' '<change-folder>?<change-dir><home>^K=<enter>'
