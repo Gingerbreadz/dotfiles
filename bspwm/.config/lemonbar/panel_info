@@ -65,5 +65,5 @@ function network_status {
 }
 
 function memory_used {
-	echo $(awk '/MemTotal/ {TOT=$2} /MemFree/ {FREE=$2} /Buffers/ {BUFF=$2} /^Cached/ {CACH=$2} /^Slab/ {SLAB=$2} END {printf("%.2f GB\n", (TOT-FREE-BUFF-CACH-SLAB)/1024/1024)}' /proc/meminfo)
+	echo $(awk '/MemTotal:/ {TOT=$2} /MemFree:/ {FREE=$2} /Buffers:/ {BUFF=$2} /^Cached:/ {CACH=$2} /^Shmem:/ {SHMEM=$2} /^SReclaimable:/ {SREC=$2} END {printf("%.2f GB\n", (TOT-FREE-BUFF-CACH-SREC+SHMEM)/1024/1024)}' /proc/meminfo)
 }
