@@ -5,11 +5,6 @@
 # Type: Bool
 c.auto_save.session = True
 
-# User agent to send. Unset to send the default. Note that the value
-# read from JavaScript is always the global value.
-# Type: String
-c.content.headers.user_agent = 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0'
-
 # Where to show the downloaded files.
 # Type: VerticalPosition
 # Valid values:
