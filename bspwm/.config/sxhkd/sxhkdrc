@@ -56,12 +56,16 @@ super + g
 # multimonitor handler
 #
 
-# screen selector
-alt + {q,w,e,r}
+# monitor selector
+super + alt + {q,w,e,r}
 	bspc monitor -f $(bspc query -M | sed -n {1,2,3,4}p)
 
+# cycle monitors
+super + {_,shift + } BackSpace
+	bspc monitor -f {prev,next}
+
 # desktop swap
-alt + {1-9,0}
+super + alt + {1-9,0}
 	D='^{1-9,10}'; M=$(bspc query -M -d $D); \
 	Df=$(bspc query -D -d focused); Mf=$(bspc query -M -m focused); \
 	if [[ $Mf != $M ]]; then bspc desktop $D -s $Df ; \
