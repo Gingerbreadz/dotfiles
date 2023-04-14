@@ -18,7 +18,7 @@ trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
 mkfifo "$PANEL_FIFO"
 
 bspc config -m "$PANEL_MONITOR" bottom_padding $PANEL_HEIGHT
-while [[ true ]]; do date +"S%R" ; sleep 5 ; done > "$PANEL_FIFO" &
+while [[ true ]]; do date +"S%I:%M %p" ; sleep 5 ; done > "$PANEL_FIFO" &
 bspc subscribe report > "$PANEL_FIFO" &
 # while (true) ; do ping -c 1 8.8.8.8 | head -n 2 | tail -n 1 ; sleep 1 ; done > "$PANEL_FIFO" &
 
