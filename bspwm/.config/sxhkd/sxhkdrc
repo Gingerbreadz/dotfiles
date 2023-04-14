@@ -13,11 +13,9 @@ super + Print
 # terminal emulator
 super + Return
 	urxvt
-super + shift + Return
-	termite
 
 # program launcher
-super + space
+super + shift + Return
 	rofi -show run
 
 # media keys
