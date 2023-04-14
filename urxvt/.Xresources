@@ -1,8 +1,12 @@
 ! URXVT
 URxvt.scrollBar: false
+URxvt.internalBorder: 2
 URxvt.depth: 32
-URxvt.font: xft:tewi:size=11
-URxvt.boldFont: xft:tewi:size=11:style=regular
+URxvt.font: xft:Tewi:size=11
+URxvt.boldFont: xft:Tewi:size=11:style=regular
+URxvt.italicFont: xft:Tewi:size=11:style=regular
+URxvt.boldItalicFont: xft:Tewi:size=11:style=regular
+Xft.dpi: 96.0
 
 !! COLORS
 URxvt*background: [80]#282828
