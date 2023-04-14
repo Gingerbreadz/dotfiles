@@ -35,9 +35,11 @@ bspc config gapless_monocle				true
 bspc config paddingless_monocle			true
 bspc config click_to_focus				true
 
-bspc rule -a Gimp desktop='^5' state=floating follow=on
-bspc rule -a Firefox desktop='^7'
+bspc rule -a Gimp desktop='^6' state=floating follow=on
+bspc rule -a qutebrowser desktop='^7'
+bspc rule -a lutris desktop='^2' state='pseudo_tiled' follow=on
 bspc rule -a explorer.exe desktop='^9' state='pseudo_tiled' follow=on
+bspc rule -a Wine desktop='^9' state='pseudo_tiled' follow=on
 bspc rule -a Albion-Online desktop='^9' state='pseudo_tiled' follow=on
 bspc rule -a mpv state=floating border=off
 
